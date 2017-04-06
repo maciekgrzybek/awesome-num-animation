@@ -1,0 +1,12 @@
+.container {
+    text-align: center;
+    width: 90vw;
+    margin: 0 auto;
+}
+.ok {
+    background: lightcyan;
+}
+.fake {
+    background: beige;
+    height: 1200px;
+}
