@@ -14,11 +14,11 @@
 })(function(){
 
     var animated = false;
-    function awesomeScroll(maxNumber){
+    function awesomeScroll(element,options){
         window.addEventListener('scroll', function(e){
 
             // Div we want to detect
-            var animateDiv = document.querySelector('[data-animation]');
+            var animateDiv = document.querySelector(element);
 
             // Distance from window to top of viewport
             var scrollY = window.pageYOffset;
@@ -29,28 +29,30 @@
             // Window height
             var windowHeight = window.innerHeight;
             
-            
+            // Function that calculate position ov viewport
             (function calculatePosition(){
                 if (distanceToTop-windowHeight-scrollY < -100 && animated==false) {
                     animateNumber();
-                    animated = true;
+                    animated = true; // Set to true, so element is animated only once
                 }
             })();
             function animateNumber(){
-                var counter = 0;
+                var range = options.maxNumber - options.startNumber;
+                var counter = options.startNumber;
+                var increment = options.maxNumber > options.startNumber ? 1 : -1;
+                var step = Math.abs(Math.floor(options.duration/range));
                 var intervalAnimation = setInterval(function(){
-                    counter += 1;
-                    document.querySelector('[data-animation]').innerHTML = counter;
-                    if (counter == maxNumber) {
+                    counter += increment;
+                    document.querySelector(element).innerHTML = counter;
+                    if (counter == options.maxNumber) {
                         clearInterval(intervalAnimation);
                     }
-                },5);
+                },step);
             };
         });
     };
     return awesomeScroll;
 });
-awesomeScroll(50);
 
 
 
