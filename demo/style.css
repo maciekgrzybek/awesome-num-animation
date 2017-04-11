@@ -1,12 +1,13 @@
+
 .container {
     text-align: center;
     width: 90vw;
     margin: 0 auto;
 }
-.ok {
+.animation {
     background: lightcyan;
 }
-.fake {
-    background: beige;
-    height: 1200px;
+.space {
+    background: white;
+    height: 120vh;
 }

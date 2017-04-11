@@ -16,14 +16,16 @@
     'use strict';
 
     var animated = false;
+    
     function awesomeScroll(element,options){
 
         //default options 
         if ( !options ) {
             options = {
                 startNumber : 0,
-                maxNumber : 200,
-                duration : 5000
+                maxNumber : 100,
+                duration : 1500,
+                reveal : 150
             }
         };
 
@@ -43,7 +45,7 @@
             
             // Function that calculate position ov viewport
             (function calculatePosition(){
-                if (distanceToTop-windowHeight-scrollY < -100 && animated==false) {
+                if (distanceToTop-windowHeight-scrollY < -(options.reveal) && animated==false) {
                     animateNumber();
                     animated = true; // Set to true, so element is animated only once
                 }
