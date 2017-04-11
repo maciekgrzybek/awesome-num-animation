@@ -1,42 +1,58 @@
 
 
+(function (factory) {
+  'use strict';
 
+  if (typeof define === 'function' && define.amd) {
+    define(factory);
+  } else if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+    module.exports = factory();
+  } else {
+    window.awesomeScroll = factory();
+  }
 
-(function awesomeCounter(){
+})(function(){
+
     var animated = false;
-    window.addEventListener('scroll', function(e){
+    function awesomeScroll(maxNumber){
+        window.addEventListener('scroll', function(e){
 
-        // Div we want to detect
-        var animateDiv = document.querySelector('[data-animation]');
+            // Div we want to detect
+            var animateDiv = document.querySelector('[data-animation]');
 
-        // Distance from window to top of viewport
-        var scrollY = window.pageYOffset;
+            // Distance from window to top of viewport
+            var scrollY = window.pageYOffset;
 
-        // Distance from div to bottom of viewport
-        var distanceToTop = animateDiv.getBoundingClientRect().top + scrollY;
+            // Distance from div to bottom of viewport
+            var distanceToTop = animateDiv.getBoundingClientRect().top + scrollY;
 
-        // Window height
-        var windowHeight = window.innerHeight;
-        
-        
-        (function calculatePosition(){
-            if (distanceToTop-windowHeight-scrollY < -100 && animated==false) {
-                animateNumber();
-                animated = true;
-            }
-        })();
-        function animateNumber(){
-            var counter = 0;
-            var intervalAnimation = setInterval(function(){
-                counter += 1;
-                document.querySelector('[data-animation]').innerHTML = counter;
-                if (counter == 100) {
-                    clearInterval(intervalAnimation);
+            // Window height
+            var windowHeight = window.innerHeight;
+            
+            
+            (function calculatePosition(){
+                if (distanceToTop-windowHeight-scrollY < -100 && animated==false) {
+                    animateNumber();
+                    animated = true;
                 }
-            },50)
-        };
-    });
-})();
+            })();
+            function animateNumber(){
+                var counter = 0;
+                var intervalAnimation = setInterval(function(){
+                    counter += 1;
+                    document.querySelector('[data-animation]').innerHTML = counter;
+                    if (counter == maxNumber) {
+                        clearInterval(intervalAnimation);
+                    }
+                },5);
+            };
+        });
+    };
+    return awesomeScroll;
+});
+awesomeScroll(50);
+
+
 
 
 
