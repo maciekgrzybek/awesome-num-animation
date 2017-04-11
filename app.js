@@ -13,8 +13,20 @@
 
 })(function(){
 
+    'use strict';
+
     var animated = false;
     function awesomeScroll(element,options){
+
+        //default options 
+        if ( !options ) {
+            options = {
+                startNumber : 0,
+                maxNumber : 200,
+                duration : 5000
+            }
+        };
+
         window.addEventListener('scroll', function(e){
 
             // Div we want to detect
@@ -36,15 +48,22 @@
                     animated = true; // Set to true, so element is animated only once
                 }
             })();
+
             function animateNumber(){
-                var range = options.maxNumber - options.startNumber;
-                var counter = options.startNumber;
-                var increment = options.maxNumber > options.startNumber ? 1 : -1;
-                var step = Math.abs(Math.floor(options.duration/range));
+
+                var range = options.maxNumber - options.startNumber; // differnce between animated numbers
+
+                var currentNumber = options.startNumber; // setting a starting number in animation
+
+                var increment = options.maxNumber > options.startNumber ? 1 : -1; // setting animation 'direction'
+
+                var step = Math.abs(Math.floor(options.duration/range)); // setting time step for animation
+
+                // actual animation part
                 var intervalAnimation = setInterval(function(){
-                    counter += increment;
-                    document.querySelector(element).innerHTML = counter;
-                    if (counter == options.maxNumber) {
+                    currentNumber += increment;
+                    document.querySelector(element).innerHTML = currentNumber;
+                    if (currentNumber == options.maxNumber) {
                         clearInterval(intervalAnimation);
                     }
                 },step);
@@ -53,27 +72,6 @@
     };
     return awesomeScroll;
 });
-
-
-
-
-
-
-
-// function animateValue(id, start, end, duration) {
-//     var range = end - start;
-//     var current = start;
-//     var increment = end > start? 1 : -1;
-//     var stepTime = Math.abs(Math.floor(duration / range));
-//     var obj = document.getElementById(id);
-//     var timer = setInterval(function() {
-//         current += increment;
-//         obj.innerHTML = current;
-//         if (current == end) {
-//             clearInterval(timer);
-//         }
-//     }, stepTime);
-// }
 
 
 
