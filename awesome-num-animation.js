@@ -23,7 +23,7 @@
         var DEFAULTS = {
             startNumber : 0,
             maxNumber : 100,
-            duration : 1500,
+            duration : 2000,
             reveal : 150
         };
 
@@ -34,6 +34,7 @@
         // Assign function takes user's options (if they exist) and change them in default options
         var settings = Object.assign({}, DEFAULTS, config);
 
+        console.log(settings)
         window.addEventListener('scroll', function(e){
 
             // Div we want to detect
@@ -64,16 +65,37 @@
 
                 var increment = settings.maxNumber > settings.startNumber ? 1 : -1; // setting animation 'direction'
 
-                var step = Math.abs(Math.floor(settings.duration/range)); // setting time step for animation
+                var step = Math.abs(settings.duration/range); // setting time step for animation
 
-                // actual animation part
-                var intervalAnimation = setInterval(function(){
+                var requestAnimationFrame = window.requestAnimationFrame || 
+                                            window.mozRequestAnimationFrame ||
+                                            window.webkitRequestAnimationFrame ||
+                                            window.msRequestAnimationFrame
+                function numAnimation(){
+
                     currentNumber += increment;
                     document.querySelector(element).innerHTML = currentNumber;
-                    if (currentNumber == settings.maxNumber) {
-                        clearInterval(intervalAnimation);
+                    if (currentNumber < settings.maxNumber){
+                        requestAnimationFrame(numAnimation);
                     }
-                },step);
+                };
+                numAnimation();
+
+                // var numAnimation = setInterval(function(){
+                //     currentNumber += increment;
+                //     document.querySelector(element).innerHTML = currentNumber;
+                //     if (currentNumber == settings.maxNumber) {
+                //         clearInterval(intervalAnimation);
+                //     }
+                // },step);
+                // actual animation part
+                // var intervalAnimation = setInterval(function(){
+                //     currentNumber += increment;
+                //     document.querySelector(element).innerHTML = currentNumber;
+                //     if (currentNumber == settings.maxNumber) {
+                //         clearInterval(intervalAnimation);
+                //     }
+                // },step);
             };
         });
     };
