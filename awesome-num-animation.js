@@ -70,7 +70,7 @@
 
                         var currentNumber = (range * progress).toFixed(0);
                         
-                        document.querySelector(element).innerHTML = currentNumber;  // Putting number in html object
+                        element.innerHTML = currentNumber;  // Putting number in html object
 
                         if (runtime < duration){ // if duration not met yet
                             requestAnimationFrame(function(timestamp){ // call requestAnimationFrame again with parameters
@@ -81,7 +81,7 @@
                     
                     requestAnimationFrame(function(timestamp){
                         starttime = timestamp || new Date().getTime(); //if browser doesn't support requestAnimationFrame, generate our own timestamp using Date
-                        animateNumber(timestamp,element,settings.duration,settings.startNumber,settings.maxNumber); // Calling animation with proper options
+                        animateNumber(timestamp,animateDiv,settings.duration,settings.startNumber,settings.maxNumber); // Calling animation with proper options
                     });
                     animated = true; // Set to true, so element is animated only once
                 }
