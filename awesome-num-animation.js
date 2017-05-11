@@ -48,63 +48,51 @@
 
             // Window height
             var windowHeight = window.innerHeight;
+
+            // Declare variable for animation Start
+            var starttime;
             
             // Function that calculate position ov viewport
-            (function calculatePosition(){
+            (function(){
                 if (distanceToTop-windowHeight-scrollY < -(settings.reveal) && animated==false) {
-                    animateNumber();
+
+                    function animateNumber(timestamp,element,duration,startNumber,maxNumber){
+
+                        var range = maxNumber - startNumber; // differnce between animated numbers
+
+                        var timestamp = timestamp || new Date().getTime(); //if browser doesn't support requestAnimationFrame, generate our own timestamp using Date
+
+                        var runtime = timestamp - starttime; // Actual time of animation
+
+                        var progress = runtime / duration; // Pretty obvious
+
+                        progress = Math.min(progress, 1); // Ensuring animation won't go over Max Number
+
+                        var currentNumber = (range * progress).toFixed(0);
+                        
+                        document.querySelector(element).innerHTML = currentNumber;  // Putting number in html object
+
+                        if (runtime < duration){ // if duration not met yet
+                            requestAnimationFrame(function(timestamp){ // call requestAnimationFrame again with parameters
+                                animateNumber(timestamp,element,duration,startNumber,maxNumber)
+                            })
+                        }
+                    };
+                    
+                    requestAnimationFrame(function(timestamp){
+                        starttime = timestamp || new Date().getTime(); //if browser doesn't support requestAnimationFrame, generate our own timestamp using Date
+                        animateNumber(timestamp,element,settings.duration,settings.startNumber,settings.maxNumber); // Calling animation with proper options
+                    });
                     animated = true; // Set to true, so element is animated only once
                 }
             })();
+            
 
-            function animateNumber(){
 
-                var range = settings.maxNumber - settings.startNumber; // differnce between animated numbers
-
-                var currentNumber = settings.startNumber; // setting a starting number in animation
-
-                var increment = settings.maxNumber > settings.startNumber ? 1 : -1; // setting animation 'direction'
-
-                var step = Math.abs(settings.duration/range); // setting time step for animation
-
-                var requestAnimationFrame = window.requestAnimationFrame || 
-                                            window.mozRequestAnimationFrame ||
-                                            window.webkitRequestAnimationFrame ||
-                                            window.msRequestAnimationFrame
-                function numAnimation(){
-
-                    currentNumber += increment;
-                    document.querySelector(element).innerHTML = currentNumber;
-                    if (currentNumber < settings.maxNumber){
-                        requestAnimationFrame(numAnimation);
-                    }
-                };
-                numAnimation();
-
-                // var numAnimation = setInterval(function(){
-                //     currentNumber += increment;
-                //     document.querySelector(element).innerHTML = currentNumber;
-                //     if (currentNumber == settings.maxNumber) {
-                //         clearInterval(intervalAnimation);
-                //     }
-                // },step);
-                // actual animation part
-                // var intervalAnimation = setInterval(function(){
-                //     currentNumber += increment;
-                //     document.querySelector(element).innerHTML = currentNumber;
-                //     if (currentNumber == settings.maxNumber) {
-                //         clearInterval(intervalAnimation);
-                //     }
-                // },step);
-            };
         });
     };
     return awesomeScroll;
 });
-
-
-
-
 
 
 
