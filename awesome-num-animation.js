@@ -19,7 +19,6 @@
     
     function awesomeScroll(element,options){
 
-        // Default values if user won't add any options
         var DEFAULTS = {
             startNumber : 0,
             maxNumber : 100,
@@ -27,69 +26,66 @@
             reveal : 150
         };
 
-        // Values added by user in function invokation
         var config = options;
 
         // Final values used in function
         // Assign function takes user's options (if they exist) and change them in default options
         var settings = Object.assign({}, DEFAULTS, config);
 
-        console.log(settings)
-        window.addEventListener('scroll', function(e){
+        var starttime;
 
-            // Div we want to detect
-            var animateDiv = document.querySelector(element);
+        // Main animating function
+        function animateNumber(timestamp, element, duration, startNumber, maxNumber){
 
-            // Distance from window to top of viewport
-            var scrollY = window.pageYOffset;
+            var range = maxNumber - startNumber; 
 
-            // Distance from div to bottom of viewport
-            var distanceToTop = animateDiv.getBoundingClientRect().top + scrollY;
+            var timestamp = timestamp || new Date().getTime(); //if browser doesn't support requestAnimationFrame, generate own timestamp
 
-            // Window height
-            var windowHeight = window.innerHeight;
+            var runtime = timestamp - starttime;
 
-            // Declare variable for animation Start
-            var starttime;
+            var progress = runtime / duration;
+
+            progress = Math.min(progress, 1); // Ensuring animation won't go over Max Number
+
+            var currentNumber = (range * progress).toFixed(0);
             
-            // Function that calculate position ov viewport
+            element.innerHTML = currentNumber; 
+
+            if (runtime < duration){ 
+
+                requestAnimationFrame(function(timestamp){ 
+
+                    animateNumber(timestamp, element, duration, startNumber, maxNumber)
+
+                })
+            }
+        };
+        
+        // What to do on scroll
+        function onScroll() {
+
+            var animateDiv = document.querySelector(element);
+            var scrollY = window.pageYOffset;
+            var distanceToTop = animateDiv.getBoundingClientRect().top + scrollY;
+            var windowHeight = window.innerHeight;
+            
             (function(){
-                if (distanceToTop-windowHeight-scrollY < -(settings.reveal) && animated==false) {
+                if (distanceToTop - windowHeight - scrollY < - (settings.reveal) && animated==false) {
 
-                    function animateNumber(timestamp,element,duration,startNumber,maxNumber){
-
-                        var range = maxNumber - startNumber; // differnce between animated numbers
-
-                        var timestamp = timestamp || new Date().getTime(); //if browser doesn't support requestAnimationFrame, generate our own timestamp using Date
-
-                        var runtime = timestamp - starttime; // Actual time of animation
-
-                        var progress = runtime / duration; // Pretty obvious
-
-                        progress = Math.min(progress, 1); // Ensuring animation won't go over Max Number
-
-                        var currentNumber = (range * progress).toFixed(0);
-                        
-                        element.innerHTML = currentNumber;  // Putting number in html object
-
-                        if (runtime < duration){ // if duration not met yet
-                            requestAnimationFrame(function(timestamp){ // call requestAnimationFrame again with parameters
-                                animateNumber(timestamp,element,duration,startNumber,maxNumber)
-                            })
-                        }
-                    };
-                    
                     requestAnimationFrame(function(timestamp){
+
                         starttime = timestamp || new Date().getTime(); //if browser doesn't support requestAnimationFrame, generate our own timestamp using Date
-                        animateNumber(timestamp,animateDiv,settings.duration,settings.startNumber,settings.maxNumber); // Calling animation with proper options
+
+                        animateNumber(timestamp, animateDiv, settings.duration, settings.startNumber, settings.maxNumber); // Calling animation with proper options
+                        
                     });
                     animated = true; // Set to true, so element is animated only once
                 }
             })();
-            
+        };
 
-
-        });
+         window.addEventListener('scroll', onScroll());
+         
     };
     return awesomeScroll;
 });
