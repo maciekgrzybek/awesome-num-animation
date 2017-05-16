@@ -62,7 +62,7 @@
         };
         
         // What to do on scroll
-        function onScroll() {
+        function onScroll(e) {
 
             var animateDiv = document.querySelector(element);
             var scrollY = window.pageYOffset;
@@ -84,7 +84,7 @@
             })();
         };
 
-         window.addEventListener('scroll', onScroll());
+         window.addEventListener('scroll', onScroll);
          
     };
     return awesomeScroll;
