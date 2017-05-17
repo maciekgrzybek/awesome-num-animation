@@ -8,7 +8,7 @@
   } else if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = factory();
   } else {
-    window.awesomeScroll = factory();
+    window.awesomeNumAnimation = factory();
   }
 
 })(function(){
@@ -17,7 +17,7 @@
 
     var animated = false;
     
-    function awesomeScroll(element,options){
+    function awesomeNumAnimation(element,options){
 
         var DEFAULTS = {
             startNumber : 0,
@@ -87,7 +87,7 @@
          window.addEventListener('scroll', onScroll);
          
     };
-    return awesomeScroll;
+    return awesomeNumAnimation;
 });
 
 
