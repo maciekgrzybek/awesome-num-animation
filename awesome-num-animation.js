@@ -27,12 +27,13 @@
         };
 
         var config = options;
-
+       
         // Final values used in function
         // Assign function takes user's options (if they exist) and change them in default options
         var settings = Object.assign({}, DEFAULTS, config);
 
         var starttime;
+        
 
         // Main animating function
         function animateNumber(timestamp, element, duration, startNumber, maxNumber){
@@ -46,8 +47,8 @@
             var progress = runtime / duration;
 
             progress = Math.min(progress, 1); // Ensuring animation won't go over Max Number
-
-            var currentNumber = (range * progress).toFixed(0);
+            
+            var currentNumber = startNumber + parseInt((range * progress).toFixed(0));
             
             element.innerHTML = currentNumber; 
 
