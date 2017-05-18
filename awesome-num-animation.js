@@ -70,7 +70,7 @@
             var windowHeight = window.innerHeight;
             
             (function(){
-                if (distanceToTop - windowHeight - scrollY < - (settings.reveal) && animated==false) {
+                if (distanceToTop - windowHeight - scrollY < - (settings.reveal)) {
 
                     requestAnimationFrame(function(timestamp){
 
@@ -80,11 +80,16 @@
                         
                     });
                     animated = true; // Set to true, so element is animated only once
+                    window.removeEventListener('scroll', onScroll);
                 }
             })();
+            
         };
 
-         window.addEventListener('scroll', onScroll);
+        if (animated == false) {
+            window.addEventListener('scroll', onScroll);
+        }
+         
          
     };
     return awesomeNumAnimation;
