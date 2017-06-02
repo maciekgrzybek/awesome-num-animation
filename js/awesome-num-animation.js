@@ -90,6 +90,7 @@
 		if (animated == false) {
 			window.addEventListener('scroll', onScroll);
 		}
+		onScroll();
 		 
 		 
 	};

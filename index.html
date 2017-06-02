@@ -3,21 +3,29 @@
     <head>
         <meta charset="utf-8">
         <title>Awesome Num Animation</title>  
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Asap:400,700|Luckiest+Guy" rel="stylesheet">
     </head>
     <body>
         <div class="container">
-            <div class="space"></div>
+            <div class="intro">
+				<h1>Awesome Num Animation</h1>
+				<h3>Just a simple script for animating number on scroll</h3>
+				<div class="github">
+					<a href="https://github.com/maciekgrzybek/awesome-num-animation">See on github</a>	
+				</div>
+				<img class="arrow" src="img/down-arrow.svg">
+			</div>
             <div class="animation">
-                <p id="target">0</p>
-                <p id="target2">0</p>
+                <p id="target-1">0</p>
+                <p id="target-2">0</p>
             </div>
-            <div class="space"></div>
+			<div class="intro"></div>
         </div>
-        <script src="awesome-num-animation.js"></script>
+        <script src="js/awesome-num-animation.js"></script>
         <script>
-                awesomeNumAnimation('#target');
-                awesomeNumAnimation('#target2', {
+                awesomeNumAnimation('#target-1');
+                awesomeNumAnimation('#target-2', {
                     startNumber: 100,
                     maxNumber: 500,
                     duration: 1000
