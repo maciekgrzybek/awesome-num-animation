@@ -2,6 +2,8 @@
 
 Simple scroll, for animating numbers when scrolling down the page. Made mainly for JS traning purpose, but if you like it, feel free to use it any project you want!
 
+Check the [demo](https://maciekgrzybek.github.io/awesome-num-animation/).
+
 
 ## Installation and usage
 
